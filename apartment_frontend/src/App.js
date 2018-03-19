@@ -1,19 +1,54 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import {
+  Grid,
+  PageHeader,
+  Row,
+  Col
+} from 'react-bootstrap'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Router>
+        <div>
+          <Route exact path="/" render={props => (
+            <Grid>
+              <PageHeader>
+                <Row>
+                  <Col xs={8}>
+                    Apartment App
+                    <small className='subtitle'>Add an Apartment</small>
+                  </Col>
+                  <Col xs={4}>
+                    <small>
+                      <Link to='/apartments' id='apartments-link'>Show Me the Apartments</Link>
+                    </small>
+                  </Col>
+                </Row>
+              </PageHeader>
+            </Grid>
+          )} />
+
+          <Route exact path="/apartments" render={props => (
+            <Grid>
+              <PageHeader>
+                <Row>
+                  <Col xs={8}>
+                    Apartment App
+                    <small className='subtitle'>All the Apartments</small>
+                  </Col>
+                  <Col xs={4}>
+                    <small>
+                      <Link to='/' id='apartments-link'>Add an Apartment</Link>
+                    </small>
+                  </Col>
+                </Row>
+              </PageHeader>
+            </Grid>
+          )} />
+        </div>
+      </Router>
     );
   }
 }
