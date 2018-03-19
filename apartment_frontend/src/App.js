@@ -13,45 +13,21 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      apartments: [
-        {
-          id: 1,
-          address1: '123 Main St.',
-          address2: 'Apt A',
-          city: 'New York',
-          zipcode: 12345,
-          state: 'NY',
-          country: 'USA',
-          name: 'Jason',
-          phone: '123-456-7890',
-          contact_hours: 'M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm'
-        },
-        {
-          id: 2,
-          address1: '456 Main St.',
-          address2: 'Apt B',
-          city: 'New York',
-          zipcode: 12345,
-          state: 'NY',
-          country: 'USA',
-          name: 'Jessica',
-          phone: '123-456-7890',
-          contact_hours: 'M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm'
-        },
-        {
-          id: 3,
-          address1: '789 Main St.',
-          address2: 'Apt C',
-          city: 'New York',
-          zipcode: 12345,
-          state: 'NY',
-          country: 'USA',
-          name: 'Jimmy',
-          phone: '123-456-7890',
-          contact_hours: 'M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm'
-        }
-      ]
+      apiUrl: "http://localhost:3001",
+      apartments: [],
+      newApartmentSuccess: false,
+      errors: null
     }
+  }
+
+  componentWillMount(){
+    fetch(`${this.state.apiUrl}/apartments`)
+    .then((rawResponse) =>{
+      return rawResponse.json()
+    })
+    .then((parsedResponse)=>{
+      this.setState({apartments: parsedResponse})
+    })
   }
 
   newAptSubmit(apartment){
