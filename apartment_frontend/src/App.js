@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 import Apartments from './pages/Apartments'
+import NewApt from './pages/NewApt'
 import {
   Grid,
   PageHeader,
@@ -53,6 +54,10 @@ class App extends Component {
     }
   }
 
+  newAptSubmit(apartment){
+    console.log("This apartment was submitted", apartment)
+  }
+
   render() {
     return (
       <Router>
@@ -72,6 +77,7 @@ class App extends Component {
                   </Col>
                 </Row>
               </PageHeader>
+              <NewApt onSubmit={this.newAptSubmit.bind(this)} />
             </Grid>
           )} />
 

@@ -32,6 +32,10 @@ class NewApt extends Component {
     this.setState({form: formState})
   }
 
+  handleSubmit(){
+    this.props.onSubmit(this.state.form)
+  }
+
   render() {
     return (
       <form>
@@ -163,7 +167,10 @@ class NewApt extends Component {
 
         <Row>
           <Col xs={6}>
-            <Button id="submit">Create New Apt Listing</Button>
+            <Button
+              id="submit"
+              onClick={this.handleSubmit.bind(this)}
+            >Create New Apt Listing</Button>
           </Col>
         </Row>
       </form>
