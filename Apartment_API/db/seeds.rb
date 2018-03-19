@@ -1,7 +1,39 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+apartment_attributes = [
+  {
+    address1: '123 Main St.',
+    address2: 'Apt A',
+    city: 'New York',
+    zipcode: 12345,
+    state: 'NY',
+    country: 'USA',
+    name: 'Jason',
+    phone: '123-456-7890',
+    contact_hours: 'M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm'
+  },
+  {
+    address1: '456 Main St.',
+    address2: 'Apt B',
+    city: 'New York',
+    zipcode: 12345,
+    state: 'NY',
+    country: 'USA',
+    name: 'Jessica',
+    phone: '123-456-7890',
+    contact_hours: 'M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm'
+  },
+  {
+    address1: '789 Main St.',
+    address2: 'Apt C',
+    city: 'New York',
+    zipcode: 12345,
+    state: 'NY',
+    country: 'USA',
+    name: 'Jimmy',
+    phone: '123-456-7890',
+    contact_hours: 'M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm'
+  }
+]
+
+apartment_attributes.each do |attributes|
+  Apartment.create(attributes)
+end
