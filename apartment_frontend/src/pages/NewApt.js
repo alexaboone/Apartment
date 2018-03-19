@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {
   Col,
   ControlLabel,
+  HelpBlock,
   FormGroup,
   FormControl,
   Button,
+  Alert,
   Row
 } from 'react-bootstrap'
 
@@ -36,12 +38,34 @@ class NewApt extends Component {
     this.props.onSubmit(this.state.form)
   }
 
+  errorsFor(attribute){
+    var errorString = ""
+    if(this.props.errors && this.props.errors[attribute]){
+      const errors = this.props.errors[attribute]
+      if(errors){
+        errorString = errors.join(", ")
+      }
+    }
+    return errorString === "" ? null : errorString
+  }
+
   render() {
     return (
       <form>
         <Row>
           <Col xs={6}>
-            <FormGroup>
+            {this.props.errors &&
+              <Alert bsStyle="danger">
+                Please check the form and try again.
+              </Alert>
+            }
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FormGroup
+            id="address1-form-group"
+            validationState={this.errorsFor('address1') && 'error'}>
               <ControlLabel id="address1">Address 1</ControlLabel>
               <FormControl
                 type="text"
@@ -49,6 +73,9 @@ class NewApt extends Component {
                 onChange={this.handleChange.bind(this)}
                 value={this.state.form.address1}
               />
+              {this.errorsFor('address1') &&
+                <HelpBlock id="address1-help-block">{this.errorsFor('address1')}</HelpBlock>
+              }
             </FormGroup>
           </Col>
         </Row>
@@ -69,7 +96,9 @@ class NewApt extends Component {
 
         <Row>
           <Col xs={6}>
-            <FormGroup>
+            <FormGroup
+            id="city-form-group"
+            validationState={this.errorsFor('city') && 'error'}>
               <ControlLabel id="city">City</ControlLabel>
               <FormControl
                 type="text"
@@ -77,6 +106,9 @@ class NewApt extends Component {
                 onChange={this.handleChange.bind(this)}
                 value={this.state.form.city}
               />
+              {this.errorsFor('city') &&
+                <HelpBlock id="city-help-block">{this.errorsFor('city')}</HelpBlock>
+              }
             </FormGroup>
           </Col>
         </Row>
@@ -97,7 +129,9 @@ class NewApt extends Component {
 
         <Row>
           <Col xs={6}>
-            <FormGroup>
+            <FormGroup
+            id="state-form-group"
+            validationState={this.errorsFor('state') && 'error'}>
               <ControlLabel id="state">State</ControlLabel>
               <FormControl
                 type="text"
@@ -105,6 +139,9 @@ class NewApt extends Component {
                 onChange={this.handleChange.bind(this)}
                 value={this.state.form.state}
               />
+              {this.errorsFor('state') &&
+                <HelpBlock id="state-help-block">{this.errorsFor('state')}</HelpBlock>
+              }
             </FormGroup>
           </Col>
         </Row>
@@ -125,7 +162,9 @@ class NewApt extends Component {
 
         <Row>
           <Col xs={6}>
-            <FormGroup>
+            <FormGroup
+              id="name-form-group"
+              validationState={this.errorsFor('name') && 'error'}>
               <ControlLabel id="name">Name</ControlLabel>
               <FormControl
                 type="text"
@@ -133,6 +172,9 @@ class NewApt extends Component {
                 onChange={this.handleChange.bind(this)}
                 value={this.state.form.name}
               />
+              {this.errorsFor('name') &&
+                <HelpBlock id="name-help-block">{this.errorsFor('name')}</HelpBlock>
+              }
             </FormGroup>
           </Col>
         </Row>

@@ -91,3 +91,119 @@ it("passes values on submit", ()=>{
   expect(submittedValues["phone"]).toBe("123-456-7890")
   expect(submittedValues["contact_hours"]).toBe("M-W-F 8am-4pm, Tu-Th 10am-7pm, Saturday 10am-2pm")
 })
+
+it("shows flash message when there is an error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = [
+    {
+      param: 'name',
+      msg: 'Is required.'
+    }
+  ]
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find(".alert-danger").length).toBe(1)
+})
+
+it("highlights address1 input when there is an error", () => {
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    address1: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find('#address1-form-group.has-error').length).toBe(1)
+})
+
+it("highlights city input when there is an error", () => {
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    city: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find('#city-form-group.has-error').length).toBe(1)
+})
+
+it("highlights state input when there is an error", () => {
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    state: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find('#state-form-group.has-error').length).toBe(1)
+})
+
+it("highlights name input when there is an error", () => {
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    name: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find('#name-form-group.has-error').length).toBe(1)
+})
+
+it("no help message for address1 when there is no error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const component = mount(<NewApt onSubmit={mockSubmitHandler}/>)
+  expect(component.find("#address1-help-block").length).toBe(0)
+})
+
+it("shows help message for address1 when there is an error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    address1: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find("#address1-help-block").length).toBe(1)
+})
+
+it("no help message for city when there is no error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const component = mount(<NewApt onSubmit={mockSubmitHandler}/>)
+  expect(component.find("#city-help-block").length).toBe(0)
+})
+
+it("shows help message for city when there is an error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    city: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find("#city-help-block").length).toBe(1)
+})
+
+it("no help message for state when there is no error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const component = mount(<NewApt onSubmit={mockSubmitHandler}/>)
+  expect(component.find("#state-help-block").length).toBe(0)
+})
+
+it("shows help message for state when there is an error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    state: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find("#state-help-block").length).toBe(1)
+})
+
+it("no help message for name when there is no error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const component = mount(<NewApt onSubmit={mockSubmitHandler}/>)
+  expect(component.find("#name-help-block").length).toBe(0)
+})
+
+it("shows help message for name when there is an error", ()=>{
+  const mockSubmitHandler = jest.fn()
+  const validationErrors = {
+    name: ['Is required.']
+  }
+
+  const component = mount(<NewApt onSubmit={mockSubmitHandler} errors={validationErrors}/>)
+  expect(component.find("#name-help-block").length).toBe(1)
+})
