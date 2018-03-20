@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
-import Apartments from './pages/Apartments'
-import NewApt from './pages/NewApt'
+import Apartments from '../pages/Apartments'
+import NewApt from '../pages/NewApt'
 import {
   Grid,
   PageHeader,
