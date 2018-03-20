@@ -209,10 +209,7 @@ class NewApt extends Component {
 
         <Row>
           <Col xs={6}>
-            <Button
-              id="submit"
-              onClick={this.handleSubmit.bind(this)}
-            >Create New Apt Listing</Button>
+            <Button id="submit" onClick={this.handleSubmit.bind(this)}>Create New Apt Listing</Button>
           </Col>
         </Row>
       </form>

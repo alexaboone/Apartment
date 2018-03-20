@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import Apartments from './pages/Apartments'
 import NewApt from './pages/NewApt'
 import {
@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       apiUrl: "http://localhost:3001",
       apartments: [],
-      newApartmentSuccess: false,
+      newAptSuccess: false,
       errors: null
     }
   }
@@ -31,7 +31,31 @@ class App extends Component {
   }
 
   newAptSubmit(apartment){
-    console.log("This apartment was submitted", apartment)
+    fetch(`${this.state.apiUrl}/apartments`,
+      {
+        body: JSON.stringify(apartment),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: "POST"
+      }
+    )
+    .then((rawResponse)=>{
+      return Promise.all([rawResponse.status, rawResponse.json()])
+    })
+    .then((parsedResponse) =>{
+      if(parsedResponse[0] === 422){
+        this.setState({errors: parsedResponse[1]})
+      }else{
+        const apartments = Object.assign([], this.state.apartments)
+        apartments.push(parsedResponse[1])
+        this.setState({
+          apartments: apartments,
+          errors: null,
+          newAptSuccess: true
+        })
+      }
+    })
   }
 
   render() {
@@ -46,14 +70,17 @@ class App extends Component {
                     Apartment App
                     <small className='subtitle'>Add an Apartment</small>
                   </Col>
-                  <Col xs={4}>
-                    <small>
-                      <Link to='/apartments' id='apartments-link'>Show Me the Apartments</Link>
-                    </small>
-                  </Col>
                 </Row>
               </PageHeader>
-              <NewApt onSubmit={this.newAptSubmit.bind(this)} />
+              <NewApt
+                onSubmit={this.newAptSubmit.bind(this)}
+                errors={this.state.errors}
+              />
+
+              {this.state.newAptSuccess &&
+                <Redirect to="/apartments" />
+              }
+
             </Grid>
           )} />
 
@@ -65,14 +92,14 @@ class App extends Component {
                     Apartment App
                     <small className='subtitle'>All the Apartments</small>
                   </Col>
-                  <Col xs={4}>
-                    <small>
-                      <Link to='/' id='apartments-link'>Add an Apartment</Link>
-                    </small>
-                  </Col>
                 </Row>
               </PageHeader>
               <Apartments apartments={this.state.apartments} />
+
+              {!this.state.newAptSuccess &&
+                <Redirect to="/" />
+              }
+
             </Grid>
           )} />
         </div>
