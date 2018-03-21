@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import Apartments from '../pages/Apartments'
 import NewApt from '../pages/NewApt'
+import withAuth from './withAuth'
+import AuthService from '../services/AuthService'
 import {
   Grid,
   PageHeader,
   Row,
+  Button,
   Col
 } from 'react-bootstrap'
+
+const Auth = new AuthService()
 
 class App extends Component {
   constructor(props){
@@ -22,7 +27,7 @@ class App extends Component {
 
   componentWillMount(){
     fetch(`${this.state.apiUrl}/apartments`)
-    .then((rawResponse) =>{
+    .then((rawResponse) => {
       return rawResponse.json()
     })
     .then((parsedResponse)=>{
@@ -58,6 +63,11 @@ class App extends Component {
     })
   }
 
+  handleLogout(){
+    Auth.logout()
+    this.props.history.replace('/login');
+  }
+
   render() {
     return (
       <Router>
@@ -69,6 +79,7 @@ class App extends Component {
                   <Col xs={8}>
                     Apartment App
                     <small className='subtitle'>Add an Apartment</small>
+                    <Button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</Button>
                   </Col>
                 </Row>
               </PageHeader>
@@ -80,7 +91,6 @@ class App extends Component {
               {this.state.newAptSuccess &&
                 <Redirect to="/apartments" />
               }
-
             </Grid>
           )} />
 
@@ -95,11 +105,9 @@ class App extends Component {
                 </Row>
               </PageHeader>
               <Apartments apartments={this.state.apartments} />
-
               {!this.state.newAptSuccess &&
                 <Redirect to="/" />
               }
-
             </Grid>
           )} />
         </div>
@@ -108,4 +116,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuth(App);

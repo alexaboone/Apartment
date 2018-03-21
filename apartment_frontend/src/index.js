@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './css/index.css';
 import App from './components/App';
 import Login from './components/Login';
+import Apartments from './pages/Apartments';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
@@ -18,6 +19,11 @@ ReactDOM.render(
         exact
         path='/login'
         component={Login}
+      />
+      <Route
+        exact
+        path='/apartments'
+        component={Apartments}
       />
     </div>
   </Router>

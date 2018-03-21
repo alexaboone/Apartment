@@ -66,7 +66,7 @@ export default class AuthService {
     }
 
     if (this.loggedIn()) {
-      headers['Authorization'] = 'Bearer' + this.getToken()
+      headers['Authorization'] = 'Bearer ' + this.getToken()
     }
 
     return fetch(url, {

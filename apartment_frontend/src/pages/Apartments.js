@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {
+  Grid,
+  PageHeader,
   Col,
   ListGroup,
   ListGroupItem,
@@ -7,13 +9,32 @@ import {
 } from 'react-bootstrap'
 
 class Apartments extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      apiUrl: "http://localhost:3001",
+      apartments: []
+    }
+  }
+
+  componentWillMount(){
+    fetch(`${this.state.apiUrl}/apartments`)
+    .then((rawResponse) => {
+      return rawResponse.json()
+    })
+    .then((parsedResponse)=>{
+      this.setState({apartments: parsedResponse})
+    })
+  }
+
   render() {
-    return(
+    return (
       <Row>
         <Col xs={12}>
           <ListGroup>
-            {this.props.apartments.map((apartment, index) =>{
-              return (
+            {this.state.apartments.map((apartment, index)=>{
+              return(
                 <ListGroupItem
                   key={index}
                   header={
