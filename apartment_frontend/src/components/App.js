@@ -21,7 +21,8 @@ class App extends Component {
       apiUrl: "http://localhost:3001",
       apartments: [],
       newAptSuccess: false,
-      errors: null
+      errors: null,
+      user: null
     }
   }
 
@@ -32,6 +33,11 @@ class App extends Component {
     })
     .then((parsedResponse)=>{
       this.setState({apartments: parsedResponse})
+    })
+
+    const userId = Auth.getUserId()
+    Auth.fetch(`http://localhost:3001/users/${userId}`).then(res=>{
+      this.setState({ user: res })
     })
   }
 
@@ -81,6 +87,24 @@ class App extends Component {
                     <small className='subtitle'>Add an Apartment</small>
                     <Button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</Button>
                   </Col>
+                </Row>
+                <Row>
+                  {this.state.user &&
+                    <div>
+                      <h2>Your Account</h2>
+                      <div>Name: {this.state.user.name}</div>
+                      <div>Email: {this.state.user.email}</div>
+
+                      <h3>Your Roles</h3>
+                      <ul>
+                        {this.state.user.roles.map( role => {
+                          return(
+                            <li key={role.name}>{role.name}</li>
+                          )
+                        })}
+                      </ul>
+                    </div>
+                  }
                 </Row>
               </PageHeader>
               <NewApt
